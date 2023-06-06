@@ -1,11 +1,19 @@
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./routes/home/home.component";
+import Navigation from "./routes/navigation/navigation.component";
+import SignIn from "./routes/sign-in/sign-in.component";
+import Shop from "./routes/shop/shop.component";
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Navigation />}>
+        {/* index means index={true} => same route as a parent, so both elements are rendered on '/' path */}
+        <Route index element={<Home />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="sign-in" element={<SignIn />} />
+      </Route>
     </Routes>
   );
 };
