@@ -1,3 +1,4 @@
+//* Check the firebase docs for more info
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
@@ -5,17 +6,16 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 //* Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAtC-Rt9xU9PuJNQJs2VvFJi5F3dB7_hNE",
-  authDomain: "authentication-ed76f.firebaseapp.com",
-  databaseURL:
-    "https://authentication-ed76f-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "authentication-ed76f",
-  storageBucket: "authentication-ed76f.appspot.com",
-  messagingSenderId: "694403920918",
-  appId: "1:694403920918:web:eba4bdb1ccca1884257137",
+  apiKey: "AIzaSyCtxM1ZMSEKbVXIacKyC9TmH5Tm5hLUdZw",
+  authDomain: "crwn-clothing-277e6.firebaseapp.com",
+  projectId: "crwn-clothing-277e6",
+  storageBucket: "crwn-clothing-277e6.appspot.com",
+  messagingSenderId: "63472298741",
+  appId: "1:63472298741:web:07f27332f92110130a73bc",
 };
 
 //* Initialize Firebase
@@ -29,3 +29,30 @@ provider.setCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+
+export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  const userSnapshot = await getDoc(userDocRef);
+
+  //* If user data does not exists => create (set) the document with the data from userAuth in my collection
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+      });
+    } catch (error) {
+      console.log("Error creating the user", error.message);
+    }
+  }
+
+  //* If user data exists => return a reference to them
+  return userDocRef;
+};
