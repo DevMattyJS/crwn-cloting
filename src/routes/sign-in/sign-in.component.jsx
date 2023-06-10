@@ -5,6 +5,7 @@ import {
 
 import SignUpForm from "../../components/sign-up-form/sign-up-form.component";
 
+//TODO try to do this component (functionality) by myself
 const SignIn = () => {
   const logGoogleUser = async () => {
     const { user } = await signInWithGooglePopup();
