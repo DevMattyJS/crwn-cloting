@@ -7,7 +7,7 @@ import {
 
 // as the actual value we want to access
 export const UserContext = createContext({
-  // sets initial value to a context
+  // sets default value of context
   currentUser: null,
   setCurrentUser: () => null,
 });
@@ -20,7 +20,8 @@ export const UserProvider = ({ children }) => {
   const value = { currentUser, setCurrentUser };
 
   useEffect(() => {
-    // Observer listener => returns unsubscribe when completed => cleanup phase
+    // Observer listener => its opened since the first run, waiting for changes in AuthState (login  / logout)
+    // => we need to get rid of it when we dont need it anymore => it returns unsubscribe when completed => cleanup phase
     const unsubscribe = onAuthStateChangeListener((user) => {
       if (user) {
         createUserDocumentFromAuth(user);
