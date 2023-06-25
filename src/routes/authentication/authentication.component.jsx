@@ -3,7 +3,6 @@ import SignInForm from "../../components/sign-in-form/sign-in-form.component";
 
 import "./authentication.styles.scss";
 
-//TODO try to do this component (functionality) by myself
 const Authentication = () => {
   return (
     <div className="authentication-container">
