@@ -12,7 +12,7 @@ const App = () => {
       <Route path="/" element={<Navigation />}>
         {/* index means index={true} => same route as a parent, so both elements are rendered on '/' path */}
         <Route index element={<Home />} />
-        <Route path="shop" element={<Shop />} />
+        <Route path="shop/*" element={<Shop />} />
         <Route path="auth" element={<Authentication />} />
         <Route path="checkout" element={<Checkout />} />
       </Route>
