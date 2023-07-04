@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useReducer, useEffect } from "react";
 
 import {
   onAuthStateChangeListener,
@@ -12,11 +12,38 @@ export const UserContext = createContext({
   setCurrentUser: () => null,
 });
 
-// a component which will be wrapped around all components, which needs access to context value (UserContext)
-// => it provides a value (our context) to all children components
+export const USER_ACTION_TYPES = {
+  SET_CURRENT_USER: "SET_CURRENT_USER",
+};
+
+const userReducer = (state, action) => {
+  //* action have always just 2 properties type (required) and payload (optional)
+  const { type, payload } = action;
+
+  switch (type) {
+    case USER_ACTION_TYPES.SET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: payload,
+      };
+    default:
+      throw new Error(`Unhandled type ${type} in userReducer`);
+  }
+};
+
+const INITIAL_STATE = {
+  currentUSer: null,
+};
+
 export const UserProvider = ({ children }) => {
-  //sets initial value to a state
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
+  const [state, dispatch] = useReducer(userReducer, INITIAL_STATE);
+  const { currentUser } = state;
+
+  const setCurrentUser = (user) => {
+    dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user });
+  };
+
   const value = { currentUser, setCurrentUser };
 
   useEffect(() => {
