@@ -32,7 +32,7 @@ const userReducer = (state, action) => {
 };
 
 const INITIAL_STATE = {
-  currentUSer: null,
+  currentUser: null,
 };
 
 export const UserProvider = ({ children }) => {

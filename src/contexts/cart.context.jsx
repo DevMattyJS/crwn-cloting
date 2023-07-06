@@ -1,6 +1,4 @@
-import { createContext, useState, useEffect, useReducer } from "react";
-
-//TODO Re-factor this cotext to use Reducers instead of state
+import { createContext, useReducer } from "react";
 
 const addCartItem = (cartItems, productToAdd) => {
   //*check if cartItems already contains productToAdd
