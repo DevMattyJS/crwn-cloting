@@ -3,7 +3,6 @@ import logger from "redux-logger";
 
 import { rootReducer } from "./root-reducer";
 
-//* middleWares -
 const middleWares = [logger];
 const composedEnhancers = compose(applyMiddleware(...middleWares));
 
